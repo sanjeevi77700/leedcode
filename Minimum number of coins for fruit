@@ -1,0 +1,27 @@
+int minimumCoins(int* prices, int pricesSize) {
+   
+    int* dp = (int*)malloc((pricesSize + 2) * sizeof(int));
+    
+
+    for (int i = pricesSize; i >= 1; i--) {
+      
+        if (i * 2 >= pricesSize) {
+            dp[i] = prices[i - 1];
+        } else {
+          
+          
+            int minNextCost = dp[i + 1];
+            for (int j = i + 1; j <= i * 2 + 1; j++) {
+                minNextCost = MIN(minNextCost, dp[j]);
+            }
+            dp[i] = prices[i - 1] + minNextCost;
+        }
+    }
+    
+    int result = dp[1];
+    
+    free(dp);
+    return result;
+}
+
+
